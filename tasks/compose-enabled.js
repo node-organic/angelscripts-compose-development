@@ -8,7 +8,8 @@ const supportedCellKinds = [
   'webcell',
   'croncell',
   'apicell',
-  'app'
+  'app',
+  'service'
 ]
 module.exports = function (angel) {
   angel.on('compose-enabled', async function () {
@@ -27,6 +28,7 @@ module.exports = function (angel) {
       if (enabledCells[cells[i].name]) {
         let cell = cells[i]
         if (supportedCellKinds.indexOf(cell.dna.cellKind) === -1) {
+          console.error('SKIP', cell.name, 'due unknown cellKind', cell.dna.cellKind)
           continue
         }
         if (cell.dna.cellKind === 'docker') {
@@ -70,6 +72,9 @@ module.exports = function (angel) {
         }
         if (cell.dna.labels && cell.dna.labels['docker.sock']) {
           cellCompose.volumes.push('/var/run/docker.sock:/var/run/docker.sock')
+        }
+        if (cell.dna.compose && cell.dna.compose.depends_on) {
+          cellCompose.depends_on = cell.dna.compose.depends_on
         }
         if (cellPorts[cell.name]) {
           let cellPort = cellPorts[cell.name]
