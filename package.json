@@ -1,6 +1,12 @@
 {
   "name": "angelscripts-compose-development",
-  "version": "1.0.0",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo no tests",
+    "release-patch": "npm run test && npm version patch && npm publish && git push --tags && git push origin master",
+    "release-minor": "npm run test && npm version minor && npm publish && git push --tags && git push origin master",
+    "release-major": "npm run test && npm version major && npm publish && git push --tags && git push origin master"
+  },
   "peerDependencies": {
     "organic-angel": "0.3.x"
   },
@@ -18,5 +24,17 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1"
-  }
+  },
+  "description": "[organic-angel](https://github.com/node-organic/organic-angel) scripts for generating [docker-compose](https://docs.docker.com/compose/) compatible configuration **and**  commands aiding docker-compose usage in development.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-organic/angelscripts-compose-development.git"
+  },
+  "author": "Boris Filipov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/node-organic/angelscripts-compose-development/issues"
+  },
+  "homepage": "https://github.com/node-organic/angelscripts-compose-development#readme"
 }
