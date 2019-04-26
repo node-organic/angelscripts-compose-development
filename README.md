@@ -14,3 +14,7 @@ The input `(.*)` is used as docker command.
 ### `angel compose -- (.*)`
 
 Executes `docker-compose up` with the input `(.*)` as docker command. Listens for `SIGINT` or `SIGTERM` and gracefully stops via `docker-compose down`
+
+### `angel compose-exec (.*)`
+
+Executes `docker exec -it` with the input `(.*)` as command. It automatically finds the respective to the service docker container.
