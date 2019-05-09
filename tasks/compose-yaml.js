@@ -55,8 +55,8 @@ module.exports = function (angel) {
       }
       if (cell.dna.compose) {
         let composeConfig = cell.dna.compose
-        if (composeConfig.capabilities && composeConfig.capabilities['docker.sock']) {
-          cellCompose.volumes.push('/var/run/docker.sock:/var/run/docker.sock')
+        if (composeConfig.volumes) {
+          cellCompose.volumes = cellCompose.volumes.concat(composeConfig.volumes)
         }
       }
       if (cellPorts[cell.name]) {
