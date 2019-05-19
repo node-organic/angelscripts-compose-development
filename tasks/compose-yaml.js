@@ -20,14 +20,8 @@ module.exports = function (angel) {
     for (let i = 0; i < cells.length; i++) {
       if (cells[i].name !== packagejson.name) continue
       let cell = cells[i]
-      let augmentedLabels = cell.dna.labels || {}
-      if (cellMountpoints[cell.name]) {
-        Object.assign(augmentedLabels, {
-          route: cellMountpoints[cell.name]
-        })
-      }
       if (cell.dna.docker) {
-        composeJSON.services[cells[i].name] = cell.dna.docker
+        composeJSON.services[cell.name] = cell.dna.docker
         continue
       }
 
@@ -40,7 +34,7 @@ module.exports = function (angel) {
 
       let cellCompose = {
         image: `node:${nodeVersion}-alpine`,
-        labels: augmentedLabels,
+        labels: {},
         volumes: [
           `${REPO}/${cell.dna.cwd}:/${cell.dna.cwd}`,
           `${REPO}/cells/node_modules:/cells/node_modules`,
@@ -51,19 +45,28 @@ module.exports = function (angel) {
         environment: {
           CELL_MODE: '_development'
         },
-        command: angel.cmdData[1]
+        command: angel.cmdData[1],
+        ports: []
       }
       if (cell.dna.compose) {
         let composeConfig = cell.dna.compose
         if (composeConfig.volumes) {
           cellCompose.volumes = cellCompose.volumes.concat(composeConfig.volumes)
         }
+        if (composeConfig.ports) {
+          cellCompose.ports = cellCompose.ports.concat(composeConfig.ports)
+        }
+      }
+      if (cellMountpoints[cell.name]) {
+        Object.assign(cellCompose.labels, {
+          route: cellMountpoints[cell.name]
+        })
       }
       if (cellPorts[cell.name]) {
         let cellPort = cellPorts[cell.name]
-        cellCompose.ports = [`${cellPort}:${cellPort}`]
+        cellCompose.ports = cellCompose.ports.concat([`${cellPort}:${cellPort}`])
       }
-      composeJSON.services[cells[i].name] = cellCompose
+      composeJSON.services[cell.name] = cellCompose
     }
     console.log(YAML.stringify(composeJSON))
   })

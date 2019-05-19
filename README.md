@@ -9,11 +9,24 @@
 Generates docker compose version 3.4 configuration for all cells found within the 
 current working repository folder. The structure and organization are expected to follow [organic-stem-skeleton v2.1](https://github.com/node-organic/organic-stem-skeleton)
 
-The input `(.*)` is used as docker command.
+The input `(.*)` is used as docker command. The generated yaml uses as source the following data points:
+
+* current working directory with package.json
+  * packagejson.name
+  * packagejson.engines.node
+
+* cell's dna
+  * cellCompose.ports
+  * cellCompose.volumes
+  * cellCompose.labels
+  
+* repo's DNA
+  * cell-ports[cell.name]
+  * cell-mountpoints[cell.name]
 
 ### `angel compose -- (.*)`
 
-Executes `docker-compose up` with the input `(.*)` as docker command. Listens for `SIGINT` or `SIGTERM` and gracefully stops via `docker-compose down`
+Executes `docker-compose up` with the input `(.*)` as docker command. Listens for `SIGINT` or `SIGTERM` and gracefully stops via `docker-compose down`. It passes `angel compose.yaml` to docker compose.
 
 ### `angel compose-exec (.*)`
 
