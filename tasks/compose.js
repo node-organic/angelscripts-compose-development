@@ -2,7 +2,7 @@ const path = require('path')
 const findSkeletonRoot = require('organic-stem-skeleton-find-root')
 
 module.exports = function (angel) {
-  angel.on(/compose (.*)/, async function (angel) {
+  angel.on(/compose -- (.*)/, async function (angel) {
     let repoRoot = await findSkeletonRoot()
     let projectName = require(path.join(repoRoot, 'package.json')).name
     let cellName = require(path.join(process.cwd(), 'package.json')).name
@@ -15,5 +15,21 @@ module.exports = function (angel) {
       angel.exec(downCmd)
     })
     angel.exec(upCmd)
+  })
+
+  angel.on(/compose up -- (.*)/, async function (angel) {
+    let repoRoot = await findSkeletonRoot()
+    let projectName = require(path.join(repoRoot, 'package.json')).name
+    let cellName = require(path.join(process.cwd(), 'package.json')).name
+    let upCmd = `npx angel compose.yaml -- ${angel.cmdData[1]} | docker-compose -p ${projectName} -f - up ${cellName}`
+    angel.exec(upCmd)
+  })
+
+  angel.on(/compose down -- (.*)/, async function (angel) {
+    let repoRoot = await findSkeletonRoot()
+    let projectName = require(path.join(repoRoot, 'package.json')).name
+    let cellName = require(path.join(process.cwd(), 'package.json')).name
+    let downCmd = `npx angel compose.yaml -- ${angel.cmdData[1]} | docker-compose -p ${projectName} -f - down ${cellName}`
+    angel.exec(downCmd)
   })
 }

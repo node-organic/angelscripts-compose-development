@@ -36,12 +36,9 @@ module.exports = function (angel) {
         image: `node:${nodeVersion}-alpine`,
         labels: {},
         volumes: [
-          `${REPO}/${cell.dna.cwd}:/${cell.dna.cwd}`,
-          `${REPO}/cells/node_modules:/cells/node_modules`,
-          `${REPO}/node_modules:/node_modules`,
-          `${REPO}/dna:/dna`
+          `${REPO}:/workdir`,
         ],
-        working_dir: `/${cell.dna.cwd}`,
+        working_dir: `/workdir/${cell.dna.cwd}`,
         environment: {
           CELL_MODE: '_development'
         },

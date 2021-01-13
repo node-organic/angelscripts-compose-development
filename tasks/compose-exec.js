@@ -3,7 +3,7 @@ const findSkeletonRoot = require('organic-stem-skeleton-find-root')
 const {spawn} = require('child_process')
 
 module.exports = function (angel) {
-  angel.on(/compose-exec (.*)/, async function (angel) {
+  angel.on(/compose-exec -- (.*)/, async function (angel) {
     let repoRoot = await findSkeletonRoot()
     let projectName = require(path.join(repoRoot, 'package.json')).name
     let cellName = require(path.join(process.cwd(), 'package.json')).name
