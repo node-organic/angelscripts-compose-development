@@ -39,12 +39,11 @@ module.exports = function (angel) {
           `${REPO}:/workdir`,
         ],
         working_dir: `/workdir/${cell.dna.cwd}`,
-        environment: {
-          CELL_MODE: '_development',
-          USER: process.env.USER
-        },
         command: angel.cmdData[1],
-        ports: []
+        ports: [],
+        environment: {
+          USER: process.env.USER
+        }
       }
       if (cell.dna.compose) {
         let composeConfig = cell.dna.compose
