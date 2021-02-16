@@ -40,7 +40,8 @@ module.exports = function (angel) {
         ],
         working_dir: `/workdir/${cell.dna.cwd}`,
         environment: {
-          CELL_MODE: '_development'
+          CELL_MODE: '_development',
+          USER: process.env.USER
         },
         command: angel.cmdData[1],
         ports: []
