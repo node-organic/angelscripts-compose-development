@@ -28,8 +28,7 @@ module.exports = function (angel) {
   angel.on(/compose down -- (.*)/, async function (angel) {
     let repoRoot = await findSkeletonRoot()
     let projectName = require(path.join(repoRoot, 'package.json')).name
-    let cellName = require(path.join(process.cwd(), 'package.json')).name
-    let downCmd = `npx angel compose.yaml -- ${angel.cmdData[1]} | docker-compose -p ${projectName} -f - down ${cellName}`
+    let downCmd = `npx angel compose.yaml -- ${angel.cmdData[1]} | docker-compose -p ${projectName} -f - down`
     angel.exec(downCmd)
   })
 }
