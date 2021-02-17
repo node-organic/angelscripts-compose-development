@@ -20,8 +20,8 @@ module.exports = function (angel) {
     for (let i = 0; i < cells.length; i++) {
       if (cells[i].name !== packagejson.name) continue
       let cell = cells[i]
-      if (cell.dna.docker) {
-        composeJSON.services[cell.name] = cell.dna.docker
+      if (cell.dna.dockerCompose) {
+        composeJSON.services[cell.name] = cell.dna.dockerCompose
         continue
       }
 
