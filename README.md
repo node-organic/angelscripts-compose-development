@@ -28,6 +28,19 @@ The input `(.*)` is used as docker command. The generated yaml uses as source th
 
 Executes `docker-compose up` with the input `(.*)` as docker command. Listens for `SIGINT` or `SIGTERM` and gracefully stops via `docker-compose down`. It passes `angel compose.yaml` to docker compose.
 
-### `angel compose-exec (.*)`
+### `angel compose up -- (.*)`
+
+Executes `docker-compose up` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
+
+### `angel compose down -- (.*)`
+
+Executes `docker-compose down` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
+
+
+### `angel compose build -- (.*)`
+
+Executes `docker-compose build` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
+
+### `angel compose-exec -- (.*)`
 
 Executes `docker exec -it` with the input `(.*)` as command. It automatically finds the respective to the service docker container.
