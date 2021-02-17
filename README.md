@@ -36,6 +36,11 @@ Executes `docker-compose up` with the input `(.*)` as docker command. It passes 
 
 Executes `docker-compose down` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
 
+
+### `angel compose build -- (.*)`
+
+Executes `docker-compose build` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
+
 ### `angel compose-exec -- (.*)`
 
 Executes `docker exec -it` with the input `(.*)` as command. It automatically finds the respective to the service docker container.
