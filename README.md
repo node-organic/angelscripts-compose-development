@@ -4,6 +4,7 @@
 
 ## commands
 
+### `angel compose.yaml`
 ### `angel compose.yaml -- (.*)`
 
 Generates docker compose version 3.4 configuration for all cells found within the 
@@ -24,14 +25,12 @@ The input `(.*)` is used as docker command. The generated yaml uses as source th
   * cell-ports[cell.name]
   * cell-mountpoints[cell.name]
 
-### `angel compose -- (.*)`
-
-Executes `docker-compose up` with the input `(.*)` as docker command. Listens for `SIGINT` or `SIGTERM` and gracefully stops via `docker-compose down`. It passes `angel compose.yaml` to docker compose.
-
+### `angel compose up`
 ### `angel compose up -- (.*)`
 
 Executes `docker-compose up` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
 
+### `angel compose down`
 ### `angel compose down -- (.*)`
 
 Executes `docker-compose down` with the input `(.*)` as docker command. It passes `angel compose.yaml` to docker compose.
