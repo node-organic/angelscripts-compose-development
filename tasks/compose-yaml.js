@@ -60,16 +60,25 @@ const printComposeYAML = async function (command) {
       })
     }
 
+    if (cell.dna.dockerCompose && cell.dna.dockerCompose.build) {
+      delete cellCompose.image
+    }
+
     composeJSON.services[cell.name] = Object.assign(cellCompose, cell.dna.dockerCompose)
+    if (cell.dna.extendDockerCompose) {
+      if (cell.dna.extendDockerCompose.volumes) {
+        composeJSON.services[cell.name].volumes = composeJSON.services[cell.name].volumes.concat(cell.dna.extendDockerCompose.volumes)
+      }
+    }
   }
   console.log(YAML.stringify(composeJSON))
 }
 
 module.exports = function (angel) {
-  angel.on(/compose.yaml/, async function (angel) {
+  angel.on(/compose.yaml$/, async function (angel) {
     printComposeYAML()
   })
   angel.on(/compose.yaml -- (.*)/, async function (angel) {
-    printComposeYAML(angel.cmdData[0])
+    printComposeYAML(angel.cmdData[1])
   })
 }
