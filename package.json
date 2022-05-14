@@ -7,9 +7,6 @@
     "release-minor": "npm run test && npm version minor && npm publish && git push --tags && git push origin master",
     "release-major": "npm run test && npm version major && npm publish && git push --tags && git push origin master"
   },
-  "peerDependencies": {
-    "organic-angel": "0.3.x"
-  },
   "dependencies": {
     "angelabilities-exec": "^1.0.0",
     "json2yaml": "^1.1.0",
